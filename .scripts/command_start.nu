@@ -1,7 +1,7 @@
 source init_env.nu
 
 
-def parse_command [path:string] : nothing -> record<name: string, description: string, run: closure> {
+def parse_command [path:string] : nothing -> record<name: string, display: string, description: string, run: closure> {
     let path_struct = $path | path parse ;
 
 
@@ -15,7 +15,7 @@ def parse_command [path:string] : nothing -> record<name: string, description: s
     let run = { nu $path }
     log debug $"Parsed metadata for command at ( $path ): ( $metadata )" ;
 
-    return { ...$metadata, run: $run } ;
+    return { ...$metadata, display: $display, run: $run } ;
 }
 
 const cmds_path = $scripts_dir | path join "commands/" ;
@@ -32,6 +32,6 @@ let available_commands = (
     } ;
 );
 log debug $"Available commands: ( $available_commands | length )" ;
-let command = $available_commands | input list -d name  "Selecione um comando: "  ; 
+let command = $available_commands | input list -d display "Selecione um comando: "  ; 
 
 do $command.run ;
