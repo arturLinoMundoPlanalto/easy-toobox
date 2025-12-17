@@ -1,0 +1,1 @@
+.bin\nu.exe --interactive .scripts\command_start.nu
